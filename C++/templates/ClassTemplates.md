@@ -61,7 +61,7 @@ void Stack<std::string>::push(std::string const & elem)
 }
 ```
 
-### 部分特例化(Partial Specialization)
+### 部分特例化(Partial Specialization, 偏特化)
 我们在特定情况下实现某些方法，但是模板参数仍然需要用户定义.例如，我么可以为指针实现一个Stack<>
 ```cpp
 #include "stack1.cpp"
@@ -129,3 +129,17 @@ class MyClass<T1*,T2*>{
 MyClass<int,int> m;
 MyClass<int*,int*>m2;
 ```
+
+### Type Aliases 类型别名
+**alias templates**
+```cpp
+template<typename T>
+using DequeStack=Stack<T,std::deque<T>>;
+```
+### Templatized Aggregates ### 
+in C++17 you can even define deduction guides for aggregate class templates:
+```cpp
+ValueWithComment(char const *,char const *)->ValueWithComment<std::string>;
+ValueWithComment vc2={"Hello","initial value"};
+```
+std::array<>也是一个聚合类(aggregate class)，模板参数是类型和元素数量。C++17也给他加了几个deduction guides. 见第四章4.4.4
