@@ -127,6 +127,7 @@ printIdx<2,0,3>(coll);
 template<typename... Elements>
 class Tuple;
 Tuple<int,std::string,char> t; //t can hold integer,string AND character.
+```
 第25章将会详述，另一个例子是variant;
 ```cpp
 template<typename... Type>
@@ -136,6 +137,7 @@ Variant<int,std::string,char> v; // t can hold integer,string OR character.
 26章将会详述.
 
 你可以定义一个类型，用来表示一串索引
+
 ```cpp
 template<std::size_t ...>
 struct Indices{
@@ -145,4 +147,24 @@ void PrintByIdx(T t,Indices<Idx...>)
 {
     print(std::get<Idx>(t)...);
 }
+
+std::array<std::string,5> arr={"HEllo","my","new","!","World"};
+printByIdx(arr,Indices<0,4,3>());
 ```
+
+**Variadic Deduction Guides**
+Even deduction Guides can be variadic. For example
+```cpp
+namespace std{
+    template<typename T,typename ...U> 
+    array(T,U...)
+    ->array<
+        enable_if_t<
+            (is_same_v<T,U>&& ...),T
+        >,
+        (1+sizeof...(U))
+    >;
+}
+std::array a{42,45,77}; // -> std::array<int,3>
+```
+这里T将会被推导为元素类型，U...就是后继元素的类型，然后1+sizeof...(U)应该很显然了。
