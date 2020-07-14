@@ -268,8 +268,8 @@ void Stack<T,Cont>::push (T const& elem)
 如果你尝试使用新版本的Stack, 你可能会得到一个错误提醒“默认值std::deque和模板模板参数Cont不兼容”.
 原因是deque等容器其实有两个模板参数，我们加上就好
 ```cpp
-template<typename T, template<typename Elem,
-							typename Alloc=std::allocator<Elem>> class Cont=std::deque>
+template<typename T,    template<typename Elem,
+			typename Alloc=std::allocator<Elem>> class Cont=std::deque>
 class Stack {
 private:
 	Cont<T> elems;
