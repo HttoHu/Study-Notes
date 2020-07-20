@@ -118,3 +118,31 @@ C y{x}; // still uses the predefined copy operator.
 我们可以用delete来禁用
 
 ## Using Concepts to Simplify enable_if<> Expressions
+告诉你一个好消息,C++20 已经支持Concept了。
+这是一个期盼已久的语言特性*concepts*, 他允许我们为模板制定简单的语法要求。
+用个关键字require
+```cpp
+	template<typename STR>
+	requires std::is_convertible_v<STR,std::string>
+	explicit Person(STR&& n) :name(std::forward<STR>(n)) {
+		std::cout << "TMPL-CONSTR for' " << name << std::endl;
+	}
+```
+我们可以将这个要求作为通用的concept
+```cpp
+template<typename T>
+concept ConvertibleToString=std::is_convertible_v<T,std::string>;
+template<typename STR>
+requires ConvertibleToString<STR>
+Person(STR && n):name(std::forward<STR>(n)){
+	...
+}
+```
+同样可以写为
+```cpp
+template<ConvertibleToString STR>
+Person(STR && n):name(std::forward<STR>(n)){
+	...
+}
+```
+自己去Google一下吧。
