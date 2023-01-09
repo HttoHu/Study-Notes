@@ -30,4 +30,22 @@ some indent chars.
 * 实现重复: R* 
 
 ![实现重复](.\img\02-tompson-repeat.drawio.png)
+
 如果是正闭包就去掉下面那个 epsilon 飞线就行
+
+实现难度不高，连图就行
+### 子集构造法
+子集构造法将 NFA转换为DFA
+
+前置概念：
+
+* $\epsilon$ 闭包: NFA 中一个状态或状态集合经过一个或多个 $\epsilon$ 走到的状态集合我们称为 $\epsilon$ 闭包（$\epsilon-closure$)
+* $move$ 函数， $move(T,a)$ 能从 $T$ 中某个状态 $s$ 出发通过 $a$ 符号转换到达的NFA状态集合。
+
+算法思想
+
+1.  我们先处理一下所有单个NFA状态的$\epsilon-closure$ 函数。
+
+2. 我们将 NFA 初始状态 $s_0$ 可以经过 $\epsilon$ 闭包的状态集合作为 DFA 的初始状态 $T_0$，然后不停的计算 $T_0$ 经过一些符号能到达的状态集合(计算move函数) $T_1,T_2,T_3 \cdots$ 然后不停的 dfs 直到没有新的状态集合产生。
+
+实现见: subset-cons.cpp 
