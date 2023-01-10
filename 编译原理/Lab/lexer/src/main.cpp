@@ -1,5 +1,12 @@
 #include "../includes/subset-cons.h"
-
+namespace Test
+{
+    namespace Hopcroft
+    {
+        using namespace Alg;
+        void case1();
+    }
+}
 int main()
 {
     using namespace Alg;
@@ -10,9 +17,8 @@ int main()
     Graph *g4 = Graph::repeat(g3, false);
     Graph *g5 = Graph::build_graph_by_char('c');
     Graph *g6 = Graph::cup(g4, g5);
-    // (a|b)*|c
+    // (a|b)+|c
     SubsetAlg sa(g6);
-    sa.gen_state_tab().print_tab();
-
+    Test::Hopcroft::case1();
     return 0;
 }

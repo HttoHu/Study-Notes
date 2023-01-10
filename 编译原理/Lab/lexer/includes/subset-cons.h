@@ -17,7 +17,10 @@ namespace Alg
     {
     public:
         void print_tab();
+
+        StateTable trim_tab();
     public:
+        int entry = 0;
         set<int> fin_stat_tab;
         vector<map<char_type, int>> tab;
     };

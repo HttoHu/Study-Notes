@@ -13,6 +13,8 @@ endef
 # Dependencies
 main_dep = subset-cons.h
 subset_cons_dep = to-nfa.h
+hopcroft_dep = subset-cons.h
+
 all:$(target)
 
 obj/main.o:$(addprefix ./src/, main.cpp) $(addprefix includes/,$(main_dep))
@@ -21,7 +23,8 @@ obj/to-nfa.o:$(addprefix ./src/, to-nfa.cpp)
 	$(COM_INS)
 obj/subset-cons.o: src/subset-cons.cpp $(addprefix includes/, $(subset_cons_dep))
 	$(COM_INS)
-
+obj/hopcroft.o: src/hopcroft.cpp $(addprefix includes/, $(hopcroft_dep))
+	$(COM_INS)
 $(target):$(OBJ)
 	@$(cc) -g $^ -o $(target) -lpthread
 	@echo "\033[33m 生成完毕\033[0m"

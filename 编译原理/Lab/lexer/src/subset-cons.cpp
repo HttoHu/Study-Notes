@@ -10,14 +10,14 @@ namespace Alg
         int i = 0;
         for (auto line : tab)
         {
-            if (!fin_stat_tab.count(i))
+            if (i == entry)
+                std::cout << "-\t" << i++ << " ";
+            else if (!fin_stat_tab.count(i))
                 std::cout << "\t" << i++ << " ";
             else
-                std::cout << "\t*" << i++ << " ";
+                std::cout << "*\t" << i++ << " ";
             for (auto [ch, t] : line)
-            {
                 std::cout << ch << "-" << t << " ";
-            }
             std::cout << "\n";
         }
     }

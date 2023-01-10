@@ -135,7 +135,6 @@ namespace Alg
 
 namespace Test
 {
-    
     void test_tompson()
     {
         using namespace Alg;
