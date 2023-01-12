@@ -14,6 +14,7 @@ endef
 main_dep = subset-cons.h
 subset_cons_dep = to-nfa.h
 hopcroft_dep = subset-cons.h
+parser_dep = subset-cons.h
 
 all:$(target)
 
@@ -25,6 +26,9 @@ obj/subset-cons.o: src/subset-cons.cpp $(addprefix includes/, $(subset_cons_dep)
 	$(COM_INS)
 obj/hopcroft.o: src/hopcroft.cpp $(addprefix includes/, $(hopcroft_dep))
 	$(COM_INS)
+obj/parser.o: src/parser.cpp $(addprefix includes/, $(parser_dep))
+	$(COM_INS)
+
 $(target):$(OBJ)
 	@$(cc) -g $^ -o $(target) -lpthread
 	@echo "\033[33m 生成完毕\033[0m"
@@ -32,6 +36,7 @@ $(target):$(OBJ)
 .PHONY clean:
 clean:
 	@rm $(OBJ)
+	@rm $(target)
 run:
 	@$(target)
 

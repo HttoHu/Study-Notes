@@ -11,17 +11,27 @@ namespace Alg
         for (auto line : tab)
         {
             if (i == entry)
-                std::cout << "-\t" << i++ << " ";
-            else if (!fin_stat_tab.count(i))
-                std::cout << "\t" << i++ << " ";
-            else
-                std::cout << "*\t" << i++ << " ";
+                std::cout << "-";
+            if (fin_stat_tab.count(i))
+                std::cout << "*";
+            std::cout << "\t" << i++ << " ";
             for (auto [ch, t] : line)
                 std::cout << ch << "-" << t << " ";
             std::cout << "\n";
         }
     }
-
+    bool StateTable::match_whole(const std::string &str)
+    {
+        int s = entry;
+        for (auto ch : str)
+        {
+            if (tab[s].count(ch))
+                s = tab[s][ch];
+            else
+                return false;
+        }
+        return fin_stat_tab.count(s);
+    }
     StateTable SubsetAlg::gen_state_tab()
     {
         StateTable ret;

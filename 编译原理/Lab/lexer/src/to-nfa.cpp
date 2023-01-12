@@ -80,7 +80,7 @@ namespace Alg
         g1->end->push_edge(epsilon_edge);
         g1->end->is_end = false;
         Graph *ret = new Graph(g1->start, g2->end);
-
+        ret->end->is_end = true;
         delete g1;
         delete g2;
         return ret;
@@ -141,7 +141,6 @@ namespace Test
         Graph *a = Graph::build_graph_by_char('a');
         Graph *b = Graph::build_graph_by_char('b');
         Graph *c = Graph::repeat(Graph::cup(a, b), false);
-        // std::cout << "HELLO" << std::endl;
         auto res = c->traverse_graph();
         for (auto [a, b, c] : res)
         {

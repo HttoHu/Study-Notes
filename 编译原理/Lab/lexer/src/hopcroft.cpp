@@ -9,7 +9,6 @@ namespace Alg
     {
         vector<set<int>> split_states(std::vector<pair<int, int>> &vec)
         {
-
             vector<set<int>> ret(1);
             sort(vec.begin(), vec.end());
             // two pointers to split different destination by same char.
@@ -51,7 +50,7 @@ namespace Alg
             }
         }
     }
-    
+
     StateTable StateTable::trim_tab()
     {
         bool flag = true;

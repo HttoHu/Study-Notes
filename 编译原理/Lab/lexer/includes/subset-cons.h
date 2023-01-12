@@ -19,6 +19,7 @@ namespace Alg
         void print_tab();
 
         StateTable trim_tab();
+        bool match_whole(const std::string &str);
     public:
         int entry = 0;
         set<int> fin_stat_tab;
@@ -32,6 +33,7 @@ namespace Alg
             gen_epsilon_tab();
         }
         StateTable gen_state_tab();
+        ~SubsetAlg() { delete NFA; }
 
     private:
         Graph *NFA;
