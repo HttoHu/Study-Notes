@@ -6,18 +6,6 @@
 
 namespace Alg
 {
-    void Node::destroy()
-    {
-        if (!head)
-            return;
-        for (Edge *cur = head; cur;)
-        {
-            cur->dest->destroy();
-            Edge *tmp = cur;
-            cur = cur->next;
-            delete tmp;
-        }
-    }
     void Node::push_edge(Edge *e)
     {
         if (head == nullptr)
@@ -26,6 +14,15 @@ namespace Alg
         {
             e->next = head->next;
             head->next = e;
+        }
+    }
+    void Node::destory_edges()
+    {
+        for (auto i = head; i;)
+        {
+            auto cur = i;
+            i = i->next;
+            delete cur;
         }
     }
 
@@ -130,6 +127,29 @@ namespace Alg
         g->end->is_end = false;
         delete g;
         return new Graph(start, end);
+    }
+    void Graph::destroy()
+    {
+        std::set<Node *> vis;
+        std::vector<Node *> s;
+
+        s.push_back(start);
+        vis.insert(start);
+        while (!s.empty())
+        {
+            auto cur = s.back();
+            s.pop_back();
+            for (auto i = cur->head; i; i = i->next)
+            {
+                auto v= i->dest;
+                if(!vis.count(v)){
+                    s.push_back(v);
+                    vis.insert(v);
+                }
+            }
+            cur->destory_edges();
+            delete cur;
+        }
     }
 }
 
