@@ -33,7 +33,7 @@ namespace Alg
             gen_epsilon_tab();
         }
         StateTable gen_state_tab();
-        ~SubsetAlg() { delete NFA; }
+        ~SubsetAlg() {NFA->destroy(); delete NFA; }
 
     private:
         Graph *NFA;

@@ -20,9 +20,8 @@ namespace Alg
         Edge *head = nullptr;
         bool is_end = false;
         void push_edge(Edge *e);
-
+        void destory_edges();
     public:
-        void destroy();
     };
 
     struct Edge
@@ -40,7 +39,8 @@ namespace Alg
     struct Graph
     {
         Graph(Node *s, Node *e) : start(s), end(e) {}
-
+        //destroy all the structures. including nodes edges. 
+        void destroy();
         Node *start;
         Node *end;
 
