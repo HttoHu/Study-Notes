@@ -26,34 +26,22 @@ namespace Alg
         }
     }
 
-    vector<tuple<int, int, char>> Graph::traverse_graph()
+    void Graph::traverse_graph(std::function<void(Node *)> f)
     {
-        vector<tuple<int, int, char>> ret;
-        std::map<Node *, int> tab;
         // ensure bfs visit once.
         std::set<Node *> vis;
 
-        int cnt = 0;
-
-        auto find_node = [&](Node *n)
-        {
-            auto it = tab.find(n);
-            if (it != tab.end())
-                return it->second;
-            tab.insert({n, ++cnt});
-            return cnt;
-        };
-
         std::queue<Node *> q;
         q.push(start);
+        vis.insert(start);
+
         while (!q.empty())
         {
             auto cur = q.front();
             q.pop();
-            int u = find_node(cur);
+            f(cur);
             for (auto i = cur->head; i; i = i->next)
             {
-                ret.push_back({u, find_node(i->dest), i->value});
                 if (!vis.count(i->dest))
                 {
                     q.push(i->dest);
@@ -61,7 +49,6 @@ namespace Alg
                 }
             }
         }
-        return ret;
     }
     Graph *Graph::build_graph_by_char(char ch)
     {
@@ -75,7 +62,10 @@ namespace Alg
     {
         Edge *epsilon_edge = new Edge(true, '*', g2->start);
         g1->end->push_edge(epsilon_edge);
-        g1->end->is_end = false;
+        // delete g1 end state tag
+        g1->traverse_graph([](Node *n)
+                           { n->is_end = false; });
+
         Graph *ret = new Graph(g1->start, g2->end);
         ret->end->is_end = true;
         delete g1;
@@ -109,6 +99,8 @@ namespace Alg
     }
     Graph *Graph::repeat(Graph *g, bool enable_zero)
     {
+        g->traverse_graph([](Node *n)
+                          { n->is_end = false; });
         Node *start = new Node();
         Node *end = new Node();
         end->is_end = true;
@@ -122,9 +114,9 @@ namespace Alg
             delete g;
             return new Graph(start, end);
         }
+
         Edge *ep3 = new Edge(true, '*', end);
         start->push_edge(ep3);
-        g->end->is_end = false;
         delete g;
         return new Graph(start, end);
     }
@@ -217,10 +209,10 @@ namespace Test
         Graph *a = Graph::build_graph_by_char('a');
         Graph *b = Graph::build_graph_by_char('b');
         Graph *c = Graph::repeat(Graph::cup(a, b), false);
-        auto res = c->traverse_graph();
-        for (auto [a, b, c] : res)
-        {
-            std::cout << a << " " << b << " " << c << std::endl;
-        }
+        // auto res = c->traverse_graph();
+        // for (auto [a, b, c] : res)
+        // {
+        //     std::cout << a << " " << b << " " << c << std::endl;
+        // }
     }
 }

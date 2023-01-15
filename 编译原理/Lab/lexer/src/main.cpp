@@ -1,6 +1,5 @@
 // #include "../includes/subset-cons.h"
-#include "../includes/mbitset.h"
-#include "../includes/to-nfa.h"
+#include "../includes/re.h"
 
 #include <time.h>
 #include <unordered_map>
@@ -23,22 +22,15 @@ namespace ReParser
 int main()
 {
     using namespace Alg;
+    using namespace Htto;
     int cnt = 0;
     time_t s = clock();
+    ReExpr regex("[A-Za-z]+-[A-Za-z]+");
+    
+    auto res = regex.match("Hello-Now is 2023-01-15 Have a nice day");
+    std::cout << res.start << " " << res.str << "\n";
 
-    // auto g1 = Graph::build_graph_by_char('a');
-    // Graph::repeat(g1,true);
-    // g1->traverse_graph();
-    // MGraph mg(g1);
-
-    // mg.print();
-    for (int i = 1; i <= 1; i++)
-    {
-        cnt++;
-        printf("%d\n", cnt);
-        ReParser::Test::case1();
-    }
     time_t e = clock();
-    std::cout << (double)(e - s) / CLOCKS_PER_SEC;
+    // std::cout << (double)(e - s) / CLOCKS_PER_SEC;
     return 0;
 }

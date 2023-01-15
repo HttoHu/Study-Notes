@@ -159,7 +159,7 @@ namespace ReParser
     ParserNode *parse_atom(const std::string &s, int &pos)
     {
         std::map<Alg::char_type, Alg::char_type> escape_tab = {
-            {'s', ' '}, {'|', ' '}, {'n', '\n'}, {'t', '\t'}, {'(', '('}, {')', ')'}, {'[', '['}, {']', ']'}};
+            {'s', ' '}, {'|', '|'}, {'n', '\n'}, {'t', '\t'}, {'(', '('}, {')', ')'}, {'[', '['}, {']', ']'}};
         skip_space(s, pos);
         // escape chars
         if (pos < s.size() && s[pos] == '\\')
@@ -182,7 +182,14 @@ namespace ReParser
             return new Unit(cur);
         }
     }
+    void error(const std::string &msg)
+    {
+        std::cout << msg<<std::endl;
+        exit(1);
+    }
 
+
+    // class methold defination .... 
     void BinOp::print() const
     {
         std::cout << "(";
@@ -220,16 +227,16 @@ namespace ReParser
             const std::string patten = "[_a-zA-Z][_a-zA-Z0-9]+";
             int pos = 0;
             ParserNode *tmp = parse_expr(patten, pos);
-            tmp->print();
+            // tmp->print();
             auto g = tmp->gen_graph();
 
             Alg::SubsetAlg sa(g);
             
             auto tab = sa.gen_state_tab().trim_tab();
 
-            tab.print_tab();
-            std::string str="";
-            std::getline(std::cin, str);
+            // tab.print_tab();
+            std::string str="jdlkajglk21098jdlkajf21098hlsajg091238h";
+            // std::getline(std::cin, str);
             if (tab.match_whole(str))
                 std::cout << "AC!\n";
             else

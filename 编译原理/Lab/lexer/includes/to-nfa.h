@@ -1,7 +1,10 @@
+#pragma once
 #include <iostream>
 #include <algorithm>
 #include <vector>
 #include <tuple>
+#include <functional>
+
 #include <map>
 #include <set>
 #include <queue>
@@ -57,7 +60,7 @@ namespace Alg
         // implemented by dfs
         // format: <u,v,char>
         // you can view the graph by : https://csacademy.com/app/graph_editor/
-        vector<tuple<int, int, char>> traverse_graph();
+        void traverse_graph(std::function<void(Node *)> f);
 
     public:
         static Graph *build_graph_by_char(char ch);
