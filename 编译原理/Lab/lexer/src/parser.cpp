@@ -213,21 +213,23 @@ namespace ReParser
 
     namespace Test
     {
-        // 2023-1-13 : 10 times 3.162s
+        // 2023-1-13 : 10 times 1.65625 O2 WSL
+        // 2023-1-14 : 10 times 0.04687 O2 WSL 
         void case1()
         {
             const std::string patten = "[_a-zA-Z][_a-zA-Z0-9]+";
             int pos = 0;
             ParserNode *tmp = parse_expr(patten, pos);
-            // tmp->print();
+            tmp->print();
             auto g = tmp->gen_graph();
 
             Alg::SubsetAlg sa(g);
             
             auto tab = sa.gen_state_tab().trim_tab();
-            // tab.print_tab();
-            std::string str="abcxfalksjdggjslkajge123jfdlaksj_dkjagflksjd";
-            // std::getline(std::cin, str);
+
+            tab.print_tab();
+            std::string str="";
+            std::getline(std::cin, str);
             if (tab.match_whole(str))
                 std::cout << "AC!\n";
             else

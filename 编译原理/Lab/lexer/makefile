@@ -11,8 +11,8 @@ define COM_INS
 endef
 
 # Dependencies
-main_dep = subset-cons.h mbitset.h
-subset_cons_dep = to-nfa.h
+main_dep = to-nfa.h subset-cons.h mbitset.h 
+subset_cons_dep = to-nfa.h mbitset.h
 hopcroft_dep = subset-cons.h
 parser_dep = subset-cons.h
 

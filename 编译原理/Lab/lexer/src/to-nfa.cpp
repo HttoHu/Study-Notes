@@ -141,14 +141,70 @@ namespace Alg
             s.pop_back();
             for (auto i = cur->head; i; i = i->next)
             {
-                auto v= i->dest;
-                if(!vis.count(v)){
+                auto v = i->dest;
+                if (!vis.count(v))
+                {
                     s.push_back(v);
                     vis.insert(v);
                 }
             }
             cur->destory_edges();
             delete cur;
+        }
+    }
+
+    void MGraph::print()
+    {
+        for (int i = 1; i < ng.size(); i++)
+        {
+            std::cout << i << " ";
+            for (auto [key, val] : ng[i])
+            {
+                std::cout << key << "-" << val << " ";
+            }
+            std::cout << "\n";
+        }
+    }
+    bool MGraph::is_end(int u)
+    {
+        return node_tab[u]->is_end;
+    }
+
+    MGraph::MGraph(Graph *g)
+    {
+        std::vector<std::pair<Node *, int>> s;
+        std::map<Node *, int> vis;
+
+        vis.insert({g->start, node_tab.size()});
+        s.push_back({g->start, node_tab.size()});
+        node_tab.push_back(g->start);
+
+        while (!s.empty())
+        {
+            auto [cur, id] = s.back();
+            s.pop_back();
+
+            if (ng.size() <= id)
+                ng.resize(id + 1);
+
+            for (auto i = cur->head; i; i = i->next)
+            {
+                auto it = vis.find(i->dest);
+                if (it == vis.end())
+                {
+                    vis.insert({i->dest, node_tab.size()});
+                    s.push_back({i->dest, node_tab.size()});
+
+                    char val = i->is_epsilon ? 0 : i->value;
+                    ng[id].push_back({node_tab.size(), val});
+                    node_tab.push_back(i->dest);
+                }
+                else
+                {
+                    char val = i->is_epsilon ? 0 : i->value;
+                    ng[id].push_back({it->second, val});
+                }
+            }
         }
     }
 }
